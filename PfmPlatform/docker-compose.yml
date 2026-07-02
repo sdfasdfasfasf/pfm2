@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_NUM_PARTITIONS: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    ports:
+      - "9092:9092"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  ml-service:
+    build: ./ml-service
+    ports:
+      - "5002:8000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+
+  tax-service:
+    build: ./tax-service
+    ports:
+      - "5001:8000"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - ML_SERVICE_URL=http://ml-service:8000
+      - REDIS_HOST=redis
+    depends_on:
+      - kafka
+      - redis
+      - ml-service
+
+  transactions-api:
+    build:
+      context: .
+      dockerfile: Transactions.API/Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - kafka
+      - redis
+    environment:
+      - Kafka__BootstrapServers=kafka:9092
+      - Redis__ConnectionString=redis:6379
+
+  transactions-worker:
+    build:
+      context: .
+      dockerfile: Transactions.Worker/Dockerfile
+    depends_on:
+      - kafka
+      - redis
+    environment:
+      - Kafka__BootstrapServers=kafka:9092
+      - Redis__ConnectionString=redis:6379
+
+  react-app:
+    build: ./react-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - transactions-api

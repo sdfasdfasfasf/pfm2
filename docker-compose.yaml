@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    restart: always
+    networks:
+      - pfm-network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    restart: always
+    networks:
+      - pfm-network
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    networks:
+      - pfm-network
+
+  ml-service:
+    build: ./ml-service
+    depends_on:
+      - redis
+    restart: always
+    networks:
+      - pfm-network
+
+  tax-service:
+    build: ./tax-service
+    depends_on:
+      - kafka
+      - redis
+      - ml-service
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - ML_SERVICE_URL=http://ml-service:8000
+      - REDIS_HOST=redis
+    restart: always
+    networks:
+      - pfm-network
+
+  transactions-api:
+    build: ./Transactions.API
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+      - redis
+    environment:
+      - Kafka__BootstrapServers=kafka:9092
+      - Redis__ConnectionString=redis:6379
+    restart: always
+    networks:
+      - pfm-network
+
+  transactions-worker:
+    build: ./Transactions.Worker
+    depends_on:
+      - kafka
+      - redis
+    environment:
+      - Kafka__BootstrapServers=kafka:9092
+      - Redis__ConnectionString=redis:6379
+    restart: always
+    networks:
+      - pfm-network
+
+  react-app:
+    build: ./react-app
+    ports:
+      - "80:80"
+    depends_on:
+      - transactions-api
+    restart: always
+    networks:
+      - pfm-network
+
+networks:
+  pfm-network:
+    driver: bridge

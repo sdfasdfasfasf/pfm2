@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Messaging", "Transactions.Messaging\Transactions.Messaging.csproj", "{C41004E5-38A4-42F7-8596-86D2927AAD29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.API", "Transactions.API\Transactions.API.csproj", "{2369B084-05E8-4232-BE8F-B4C062756C7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Worker", "Transactions.Worker\Transactions.Worker.csproj", "{C39842FD-25F9-4843-878A-3B802FA99E81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{3E4751AF-50B5-483F-988A-A004C82AE370}"
+	ProjectSection(SolutionItems) = preProject
+		..\.env = ..\.env
+		..\.gitignore = ..\.gitignore
+		..\docker-compose.yaml = ..\docker-compose.yaml
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "react-app", "react-app\react-app.esproj", "{6BB73F15-10AC-4307-AA2E-56159093C563}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1B1334C7-E494-4ECC-B53B-2323EF239126}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ml-services", "ml-services", "{910C7E86-4A79-431D-9322-6B08F8CD3A73}"
+	ProjectSection(SolutionItems) = preProject
+		ml-service\Dockerfile = ml-service\Dockerfile
+		ml-service\main.py = ml-service\main.py
+		ml-service\model.py = ml-service\model.py
+		ml-service\requirements.txt = ml-service\requirements.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tax-service", "tax-service", "{5B34087B-2FF7-48B9-A2DF-4F92D5342E65}"
+	ProjectSection(SolutionItems) = preProject
+		tax-service\config.py = tax-service\config.py
+		tax-service\consumer.py = tax-service\consumer.py
+		tax-service\Dockerfile = tax-service\Dockerfile
+		tax-service\requirements.txt = tax-service\requirements.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C41004E5-38A4-42F7-8596-86D2927AAD29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C41004E5-38A4-42F7-8596-86D2927AAD29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C41004E5-38A4-42F7-8596-86D2927AAD29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C41004E5-38A4-42F7-8596-86D2927AAD29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2369B084-05E8-4232-BE8F-B4C062756C7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2369B084-05E8-4232-BE8F-B4C062756C7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2369B084-05E8-4232-BE8F-B4C062756C7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2369B084-05E8-4232-BE8F-B4C062756C7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39842FD-25F9-4843-878A-3B802FA99E81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39842FD-25F9-4843-878A-3B802FA99E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39842FD-25F9-4843-878A-3B802FA99E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39842FD-25F9-4843-878A-3B802FA99E81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB73F15-10AC-4307-AA2E-56159093C563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB73F15-10AC-4307-AA2E-56159093C563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB73F15-10AC-4307-AA2E-56159093C563}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6BB73F15-10AC-4307-AA2E-56159093C563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB73F15-10AC-4307-AA2E-56159093C563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB73F15-10AC-4307-AA2E-56159093C563}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1B1334C7-E494-4ECC-B53B-2323EF239126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B1334C7-E494-4ECC-B53B-2323EF239126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B1334C7-E494-4ECC-B53B-2323EF239126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B1334C7-E494-4ECC-B53B-2323EF239126}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

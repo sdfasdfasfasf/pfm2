@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Transactions.Worker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
