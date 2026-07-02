@@ -1,0 +1,12 @@
+services:
+  transactions.api:
+    image: ${DOCKER_REGISTRY-}transactionsapi
+    build:
+      context: .
+      dockerfile: Transactions.API/Dockerfile
+
+  transactions.worker:
+    image: ${DOCKER_REGISTRY-}transactionsworker
+    build:
+      context: .
+      dockerfile: Transactions.Worker/Dockerfile
