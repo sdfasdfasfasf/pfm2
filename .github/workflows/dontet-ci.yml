@@ -15,15 +15,18 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Setup .NET
+      run: ls -la
+
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore PfmPlatform.sln
+      run: dotnet restore PfmPlatform/PfmPlatform.sln
 
     - name: Build solution
-      run: dotnet build PfmPlatform.sln --configuration Release --no-restore
+      run: dotnet build PfmPlatform/PfmPlatform.sln --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test PfmPlatform.sln --configuration Release --no-build --verbosity normal
+      run: dotnet test PfmPlatform/PfmPlatform.sln --configuration Release --no-build --verbosity normal
